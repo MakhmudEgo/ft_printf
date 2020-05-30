@@ -1,0 +1,8 @@
+main.c
+*.DS_Store
+**/cmake-build-debug
+**/.idea
+CMakeLists.txt
+test.c
+a.out
+
