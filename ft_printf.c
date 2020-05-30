@@ -6,7 +6,7 @@
 /*   By: mizola <mizola@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/30 19:40:43 by mizola            #+#    #+#             */
-/*   Updated: 2020/05/30 19:42:01 by mizola           ###   ########.fr       */
+/*   Updated: 2020/05/30 19:56:35 by mizola           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 int main(void)
 {
-	write(1, "hello world!\n", 13);
+	write(1, "hello git!\n", 11);
 	return (0);
 }
