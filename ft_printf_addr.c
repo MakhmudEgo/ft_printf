@@ -12,40 +12,39 @@
 
 #include "libftprintf.h"
 
-static int	print_p(unsigned long i)
+static void	print_p(char c, unsigned long n, int *i)
 {
-	char n_hex;
+	char	n_hex;
 
-	if (i >= 16)
-		print_p(i/16);
-
-	n_hex = (int)(i % 16) + '0';
+	if (n >= 16)
+		print_p(c, n >> 4, i);
+	n_hex = (int)(n % 16) + '0';
 	if ((int)n_hex == 58)
-		n_hex = 'a';
+		n_hex = (c == 'X') ? 'A' : 'a';
 	if ((int)n_hex == 59)
-		n_hex = 'b';
+		n_hex = (c == 'X') ? 'B' : 'b';
 	if ((int)n_hex == 60)
-		n_hex = 'c';
+		n_hex = (c == 'X') ? 'C' : 'c';
 	if ((int)n_hex == 61)
-		n_hex = 'd';
+		n_hex = (c == 'X') ? 'D' : 'd';
 	if ((int)n_hex == 62)
-		n_hex = 'e';
+		n_hex = (c == 'X') ? 'E' : 'e';
 	if ((int)n_hex == 63)
-		n_hex = 'f';
+		n_hex = (c == 'X') ? 'F' : 'f';
 	write(1, &n_hex, 1);
-	return 0;
+	*i += 1;
 }
 
-int ft_printf_addr(int c, ...)
+int			ft_printf_addr(int c, va_list ap, char x)
 {
-	va_list ap;
+	int i;
 
-	va_start(ap, c);
-	if (c == 'p') {
-		print_p(va_arg(ap, unsigned long));
-	}
-	else {
-		print_p(va_arg(ap, int));
-	}
-	return 0;
+	i = 0;
+	if ((char)c == 'p' || x)
+		i += c == 'X' ? write(1, "0X", 2) : write(1, "0x", 2);
+	if ((char)c == 'p')
+		print_p((char)c, va_arg(ap, unsigned long), &i);
+	else
+		print_p((char)c, va_arg(ap, int), &i);
+	return (i);
 }

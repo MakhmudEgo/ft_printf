@@ -27,10 +27,13 @@ typedef struct	s_formatspecifiers
 	int			accuracy;
 	char		modifier;
 	char		modifier_second;
+	char 		modifier_x;
 	char		conversion_type;
 }				t_format;
 
 int				ft_printf(const char *format, ...);
-int				ft_printf_addr(int c, ...);
+int				ft_printf_addr(int c, va_list ap, char x);
+void			get_format_specifiers(const char *format, t_format *f_s, va_list ap);
+size_t			ft_strlen(const char *str);
 
 #endif

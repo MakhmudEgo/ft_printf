@@ -12,87 +12,56 @@
 
 #include "libftprintf.h"
 
-void			init_format_specifiers(t_format *f_s)
+static int		ft_print_chars(va_list ap, const char c_arg)
 {
-	f_s->flag = 1;
-	f_s->flag_second = 1;
-	f_s->width = 0x0;
-	f_s->accuracy = 0x0;
-	f_s->modifier = 0x0;
-	f_s->modifier_second = 0x0;
-	f_s->conversion_type = 0x0;
-}
-
-/*
-** ' ' && '-'
-** '+' && '-'
-** '0' && ' '
-** '0' && '+'
-** '+' !gnored ' '
-** '-' !gnored '0'
-** %[флаги][ширина][точность][модификаторы][тип преобразования]
-** %[flags][width][accuracy][modifiers][conversion type]
-*/
-
-void			get_format_specifiers(const char *format, t_format *f_s)
-{
-	init_format_specifiers(f_s);
-	while (*format && (*format == ' ' || *format == '-'
-	|| *format == '+' || *format == '0'))
-	{
-		if (f_s->flag == 1 || (*format == '+' && f_s->flag == ' ')
-		|| (*format == '-' && f_s->flag == '0'))
-			f_s->flag = *format;
-		else if ((f_s->flag_second == 1 && f_s->flag != *format) ||
-		((*format == '+' && f_s->flag_second == ' ')
-		|| (*format == '-' && f_s->flag_second == '0')))
-			f_s->flag_second = *format;
-		format++;
-	}
-	while (*format && *format >= '0' && *format <= '9')
-	{
-		f_s->width = (f_s->width * 10) + (*format - '0');
-		format++;
-	}
-	if (*format == '.')
-		format++;
-	while (*format && *format >= '0' && *format <= '9')
-	{
-		f_s->accuracy = (f_s->accuracy * 10) + (*format - '0');
-		format++;
-	}
-	while (*format && (*format == 'h' || *format == 'l'
-	|| *format == 'l' || *format == 'L'))
-	{
-		if (!f_s->modifier)
-			f_s->modifier = *format;
-		else if (f_s->modifier == *format && *format != 'L')
-			f_s->modifier_second = *format;
-		format++;
-	}
-	f_s->conversion_type = *format;
-}
-
-static int		ft_printf_assist(const char *format, va_list ap)
-{
-	int			i;
-	t_format	f_s;
+	int		i;
+	char	c;
+	char	*str;
 
 	i = 0;
-	get_format_specifiers(format, &f_s);
-	if (*format == 'p' || *format == 'x' || *format == 'X')
+	str = 0x0;
+	c = 0x0;
+	if (c_arg == 'c')
 	{
-		i = (*format == 'p') ?
-			ft_printf_addr(*format, va_arg(ap, unsigned long)) :
-			ft_printf_addr(*format, va_arg(ap, int));
+		c = (char)va_arg(ap, int);
+		i += write(1, &c, 1);
+	}
+	else
+	{
+		str = va_arg(ap, char*);
+		i += write(1, str, ft_strlen(str));
 	}
 	return (i);
 }
 
+static int		ft_printf_assist(const char *format, va_list ap, t_format *f_s)
+{
+	int			i;
+
+	i = 0;
+	while (*format && *format != f_s->conversion_type)
+		format++;
+	if (*format == 'p' || *format == 'x' || *format == 'X')
+		i += ft_printf_addr(*format, ap, f_s->modifier_x);
+	else if (*format == 's' || *format == 'c')
+		i += ft_print_chars(ap, *format);
+	return (i);
+}
+
+/*
+** c+s+p+diu+x+X+%
+** [-0.*]+
+** n f g e
+** l ll h hh
+** l ll h hh
+** [# space +]+
+*/
+
 int				ft_printf(const char *format, ...)
 {
-	va_list	ap;
-	int		i;
+	va_list		ap;
+	int			i;
+	t_format	f_s;
 
 	i = 0;
 	va_start(ap, format);
@@ -101,13 +70,13 @@ int				ft_printf(const char *format, ...)
 		if (*format == '%')
 		{
 			format++;
-			i += ft_printf_assist(format, ap);
+			get_format_specifiers(format, &f_s, ap);
+			i += ft_printf_assist(format, ap, &f_s);
+			while (*format && *format != f_s.conversion_type)
+				format++;
 		}
 		else
-		{
-			write(1, &(*format), 1);
-			i++;
-		}
+			i += write(1, &(*format), 1);
 		format++;
 	}
 	return (i);
@@ -115,33 +84,15 @@ int				ft_printf(const char *format, ...)
 
 int				main(void)
 {
-	char *s = "hello";
-	char c = 'c';
-	int i = -512;
-	float n = 5;
-//	ft_printf("%s", "world");
-/*	ft_printf("%p", s);
-	write(1, "\n", 1);
-	ft_printf("%X", s);*/
+	char *s = "world";
+	char c = '!';
+	double n = 5.55;
+	int d = n * 1000;
+	int my_printf = ft_printf("hello % -# 0*123.*13p%c\n", 13, 15, s, c);
+	int sys_printf = printf("hello %p%c\n", s, c);
 
-//	ft_printf("%0 0 0 -+193.0000009531d", n);
-//	printf("|% -0+d|", 1);
-	long double dd = 2.2;
-	printf("|%dd|\n", i);
 
-	//	printf("|%.qqthl;'\,z#13d|\n", i);
+//	printf("Test%00 10d%++--''d%%ff%xsdf%%-6d\\n%-6d\\n%  -6d\\n", i, i, i, i, i);
+//	printf("|%.qqthl;'\,z#13d|\n", i);
 	return (0);
 }
-//0x101128fa8
-//000000000000000000000000000000000000000000000000000000013
-//00000000000000000000000000000000000000000000000000
-//000000000000000000000000000013        13
-//10-A; 11-B; 12-C; 13-D; 14-E; 15-F;
-
-
-
-/*
- * else if (*format == 'c' || *format == 's')
-				return 1;
-			else if (*format == 'd' || *format == 'i' || *format == 'u')
-				return 2;*/
