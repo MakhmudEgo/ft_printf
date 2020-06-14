@@ -42,9 +42,11 @@ static int		ft_printf_assist(const char *format, va_list ap, t_format *f_s)
 	while (*format && *format != f_s->conversion_type)
 		format++;
 	if (*format == 'p' || *format == 'x' || *format == 'X')
-		i += ft_printf_addr(*format, ap, f_s->modifier_x);
+		i += ft_printf_addr(*format, ap, f_s);
 	else if (*format == 's' || *format == 'c')
 		i += ft_print_chars(ap, *format);
+	else if (*format == 'd' || *format == 'i' || *format == 'u')
+		i += ft_printf_num(ap, f_s);
 	return (i);
 }
 
@@ -87,10 +89,12 @@ int				main(void)
 	char *s = "world";
 	char c = '!';
 	double n = 5.55;
-	int d = n * 1000;
-	int my_printf = ft_printf("hello % -# 0*123.*13p%c\n", 13, 15, s, c);
-	int sys_printf = printf("hello %p%c\n", s, c);
-
+	unsigned long long du = 18446744073709551615;
+	long d = -9223372036854775824;
+	int my_printf = ft_printf("n:hello % -# 0*123.*13p%c\n", 13, 15, s, c);
+	int sys_printf = printf("o:hello %p%c\n", s, c);
+	ft_printf("n:%d", d);
+	printf("\no:%d\n", d);
 
 //	printf("Test%00 10d%++--''d%%ff%xsdf%%-6d\\n%-6d\\n%  -6d\\n", i, i, i, i, i);
 //	printf("|%.qqthl;'\,z#13d|\n", i);
