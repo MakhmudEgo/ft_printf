@@ -18,6 +18,8 @@
 # include <stdlib.h>
 # include <string.h>
 # include <stdarg.h>
+# include <locale.h>
+
 
 typedef struct	s_formatspecifiers
 {
@@ -36,6 +38,6 @@ int				ft_printf_addr(char c, va_list ap, t_format *f_s);
 void			get_format_specifiers(const char *format, t_format *f_s, va_list ap);
 size_t			ft_strlen(const char *str);
 int				ft_printf_num(va_list ap, t_format *f_s);
-
+int				ft_printf_unicode(va_list ap, char c_arg);
 
 #endif
