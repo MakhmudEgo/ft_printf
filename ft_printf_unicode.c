@@ -12,10 +12,10 @@
 
 #include "libftprintf.h"
 
-static int print_chars_2oct(const int src)
+static int	print_chars_2oct(const int src)
 {
-	int i;
-	char oct_1;
+	int		i;
+	char	oct_1;
 
 	i = 0;
 	oct_1 = (src >> 6) | 0b11000000;
@@ -25,10 +25,10 @@ static int print_chars_2oct(const int src)
 	return (i);
 }
 
-static int print_chars_3oct(const int src)
+static int	print_chars_3oct(const int src)
 {
-	int i;
-	char oct_1;
+	int		i;
+	char	oct_1;
 
 	i = 0;
 	oct_1 = (src >> 12) | 0b11100000;
@@ -40,10 +40,10 @@ static int print_chars_3oct(const int src)
 	return (i);
 }
 
-static int print_chars_4oct(const int src)
+static int	print_chars_4oct(const int src)
 {
-	int i;
-	char oct_1;
+	int		i;
+	char	oct_1;
 
 	i = 0;
 	oct_1 = (src >> 18) | 0b11110000;
@@ -57,8 +57,7 @@ static int print_chars_4oct(const int src)
 	return (i);
 }
 
-
-static int print_chars(int src)
+static int	print_chars(int src)
 {
 	int i;
 	int tmp;
@@ -81,10 +80,10 @@ static int print_chars(int src)
 	return (i);
 }
 
-int ft_printf_unicode(va_list ap, char c_arg)
+int			ft_printf_unicode(va_list ap, char c_arg)
 {
-	int i;
-	wchar_t *ptr_uni;
+	int		i;
+	wchar_t	*ptr_uni;
 
 	ptr_uni = 0x0;
 	i = 0;
@@ -98,7 +97,6 @@ int ft_printf_unicode(va_list ap, char c_arg)
 			i += print_chars(*ptr_uni);
 			ptr_uni++;
 		}
-
 	}
 	return (i);
 }
