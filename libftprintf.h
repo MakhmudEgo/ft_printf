@@ -22,14 +22,14 @@
 
 typedef struct	s_formatspecifiers
 {
-	char		flag;
-	char		flag_second;
-	int			width;
-	int			accuracy;
-	char		modifier;
-	char		modifier_second;
-	char		modifier_x;
-	char		conversion_type;
+	char		flg;
+	char		flg_ii;
+	int			wdth;
+	int			acc;
+	char		mdf;
+	char		mdf_ii;
+	char		mdf_x;
+	char		cnv_tp;
 }				t_format;
 
 int				ft_printf(const char *format, ...);
@@ -41,6 +41,10 @@ int				ft_printf_num(va_list ap, t_format *f_s);
 int				ft_printf_unicode(va_list ap, char c_arg);
 int				ft_signed_numlen(long long int n);
 int				ft_unsigned_numlen(unsigned long long int n);
-
+void			ft_printf_unsigned(unsigned long n, int *i);
+void			ft_printf_signed(long long int n, int *i);
+int				ft_printf_sgnd(va_list ap, t_format *f_s);
+int				ft_printf_char(int n, char c);
+long long int	get_num_value(va_list ap, t_format *f_s);
 
 #endif
