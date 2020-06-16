@@ -39,5 +39,8 @@ void			get_format_specifiers(const char *format,
 size_t			ft_strlen(const char *str);
 int				ft_printf_num(va_list ap, t_format *f_s);
 int				ft_printf_unicode(va_list ap, char c_arg);
+int				ft_signed_numlen(long long int n);
+int				ft_unsigned_numlen(unsigned long long int n);
+
 
 #endif
