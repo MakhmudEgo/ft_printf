@@ -38,17 +38,20 @@ static void	init_format_specifiers(t_format *f_s)
 static void	g_f_s_assist_1(const char *format, t_format *f_s)
 {
 	while (*format && (*format == ' ' || *format == '-'
-	|| *format == '+' || *format == '0' || *format == '#'))
+	|| *format == '+' || *format == '0' || *format == '#' || *format == "'"[0]))
 	{
-		if (f_s->flag == 1 || (*format == '+' && f_s->flag == ' ')
-			|| (*format == '-' && f_s->flag == '0'))
-			f_s->flag = *format;
-		else if ((f_s->flag_second == 1 && f_s->flag != *format) ||
-		((*format == '+' && f_s->flag_second == ' ')
-		|| (*format == '-' && f_s->flag_second == '0')))
-			f_s->flag_second = *format;
-		if (!f_s->modifier_x && *format == '#')
-			f_s->modifier_x = *format;
+		if (*format != "'"[0])
+		{
+			if (f_s->flag == 1 || (*format == '+' && f_s->flag == ' ')
+				|| (*format == '-' && f_s->flag == '0'))
+				f_s->flag = *format;
+			else if ((f_s->flag_second == 1 && f_s->flag != *format) ||
+			((*format == '+' && f_s->flag_second == ' ')
+			|| (*format == '-' && f_s->flag_second == '0')))
+				f_s->flag_second = *format;
+			if (!f_s->modifier_x && *format == '#')
+				f_s->modifier_x = *format;
+		}
 		format++;
 	}
 }
@@ -95,7 +98,7 @@ void		get_format_specifiers(const char *format, t_format *f_s, va_list ap)
 	init_format_specifiers(f_s);
 	g_f_s_assist_1(format, f_s);
 	while (*format && (*format == ' ' || *format == '-'
-	|| *format == '+' || *format == '0' || *format == '#'))
+	|| *format == '+' || *format == '0' || *format == '#' || *format == "'"[0]))
 		format++;
 	if (*format == '*')
 	{
