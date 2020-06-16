@@ -52,6 +52,8 @@ static int		ft_printf_assist(const char *format, va_list ap, t_format *f_s)
 		i += ft_print_chars(ap, f_s);
 	else if (*format == 'd' || *format == 'i' || *format == 'u')
 		i += ft_printf_num(ap, f_s);
+	else if (*format == '%')
+		i += write(1, "%", 1);
 	return (i);
 }
 
@@ -96,12 +98,11 @@ int				ft_printf(const char *format, ...)
 
 int				main(void)
 {
-	int i = ft_printf("|%-030.15d|\n", 123000000);
-	int n = printf("|%-030.15d|\n", 123000000);
+	int i = ft_printf("|%+- 08.5d|\n", 123456);
+	int n = printf("|%+-- 8.5d|\n", 123456);
 
-
-
-//	printf("Test%00 10d%++--''d%%ff%xsdf%%-6d\\n%-6d\\n%  -6d\\n", i, i, i, i, i);
+	ft_printf("Test%00 10d%++--'''12.9d%%ff%xsdf%%-6d\\n%-6d\\n%  -6d\\n\n", i, i, i, i, i);
+	printf("Test%00 10d%++--'''12.9d%%ff%xsdf%%-6d\\n%-6d\\n%  -6d\\n\n", n, n, n, n, n);
 //	printf("|%.qqthl;'\,z#13d|\n", i);
 	return (0);
 }
