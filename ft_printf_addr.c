@@ -63,15 +63,15 @@ int			ft_printf_addr(char c, va_list ap, t_format *f_s)
 	int i;
 
 	i = 0;
-	if (c == 'p' || f_s->modifier_x)
+	if (c == 'p' || f_s->mdf_x)
 		i += c == 'X' ? write(1, "0X", 2) : write(1, "0x", 2);
-	if (c == 'p' || f_s->modifier == 'l')
+	if (c == 'p' || f_s->mdf == 'l')
 		print_p(c, va_arg(ap, unsigned long), &i);
 	else
 	{
-		if (f_s->modifier == 'h' && f_s->modifier_second != 'h')
+		if (f_s->mdf == 'h' && f_s->mdf_ii != 'h')
 			print_x(c, (unsigned short)va_arg(ap, int), &i, f_s);
-		else if (f_s->modifier == 'h' && f_s->modifier_second == 'h')
+		else if (f_s->mdf == 'h' && f_s->mdf_ii == 'h')
 			print_x(c, (unsigned char)va_arg(ap, int), &i, f_s);
 		else
 			print_x(c, va_arg(ap, int), &i, f_s);
