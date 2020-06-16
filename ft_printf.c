@@ -21,9 +21,9 @@ static int		ft_print_chars(va_list ap, t_format *f_s)
 	i = 0;
 	str = 0x0;
 	c = 0x0;
-	if (f_s->modifier == 'l' || f_s->conversion_type == 'S')
-		return (ft_printf_unicode(ap, f_s->conversion_type));
-	if (f_s->conversion_type == 'c')
+	if (f_s->mdf == 'l' || f_s->cnv_tp == 'S')
+		return (ft_printf_unicode(ap, f_s->cnv_tp));
+	if (f_s->cnv_tp == 'c')
 	{
 		c = (char)va_arg(ap, int);
 		i += write(1, &c, 1);
@@ -44,7 +44,7 @@ static int		ft_printf_assist(const char *format, va_list ap, t_format *f_s)
 	int			i;
 
 	i = 0;
-	while (*format && *format != f_s->conversion_type)
+	while (*format && *format != f_s->cnv_tp)
 		format++;
 	if (*format == 'p' || *format == 'x' || *format == 'X')
 		i += ft_printf_addr(*format, ap, f_s);
@@ -81,7 +81,7 @@ int				ft_printf(const char *format, ...)
 			format++;
 			get_format_specifiers(format, &f_s, ap);
 			i += ft_printf_assist(format, ap, &f_s);
-			while (*format && *format != f_s.conversion_type)
+			while (*format && *format != f_s.cnv_tp)
 				format++;
 		}
 		else
@@ -90,19 +90,7 @@ int				ft_printf(const char *format, ...)
 	}
 	return (i);
 }
-
 /*
 ** %[флаги][ширина][точность][модификаторы][тип преобразования]
-** %[flags][width][accuracy][modifiers][conversion type]
+** %[flags][width][accuracy][mdfs][conversion type]
 */
-
-int				main(void)
-{
-	int i = ft_printf("|%+- 08.5ld|\n", 92233720368547758);
-	int n = printf("|%+-- 8.5ld|\n", 92233720368547758);
-
-	ft_printf("Test%00 10d%++--'''12.9d%%ff%xsdf%%-6d\\n%-6d\\n%  -6d\\n\n", i, i, i, i, i);
-	printf("Test%00 10d%++--'''12.9d%%ff%xsdf%%-6d\\n%-6d\\n%  -6d\\n\n", n, n, n, n, n);
-//	printf("|%.qqthl;'\,z#13d|\n", i);
-	return (0);
-}
