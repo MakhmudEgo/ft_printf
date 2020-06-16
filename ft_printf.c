@@ -90,16 +90,16 @@ int				ft_printf(const char *format, ...)
 	}
 	return (i);
 }
+
 /*
 ** %[флаги][ширина][точность][модификаторы][тип преобразования]
 ** %[flags][width][accuracy][modifiers][conversion type]
 */
 
-
 int				main(void)
 {
-	int i = ft_printf("|%+- 08.5d|\n", 123456);
-	int n = printf("|%+-- 8.5d|\n", 123456);
+	int i = ft_printf("|%+- 08.5ld|\n", 92233720368547758);
+	int n = printf("|%+-- 8.5ld|\n", 92233720368547758);
 
 	ft_printf("Test%00 10d%++--'''12.9d%%ff%xsdf%%-6d\\n%-6d\\n%  -6d\\n\n", i, i, i, i, i);
 	printf("Test%00 10d%++--'''12.9d%%ff%xsdf%%-6d\\n%-6d\\n%  -6d\\n\n", n, n, n, n, n);

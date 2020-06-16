@@ -66,12 +66,13 @@ int	ft_printf_sgnd(va_list ap, t_format *f_s)
 	num_len = ft_signed_numlen(n);
 	if (f_s->flag == '-' || f_s->flag_second == '-')
 	{
+		i += (n < 0) ? write(1, "-", 1) : 0;
 		if (f_s->flag == '+' || f_s->flag_second == '+')
 			i += (n >= 0) ? write(1, "+", 1) : 0;
 		else if (f_s->flag == ' ' || f_s->flag_second == ' ')
 			i += write(1, " ", 1);
-		i += ft_printf_char(f_s->accuracy - num_len, '0');
-		ft_printf_signed(n, &i);
+		i += ft_printf_char(f_s->accuracy - ((n < 0) ? num_len - 1 : num_len), '0');
+		ft_printf_signed((n < 0) ? -n : n, &i);
 		f_s->accuracy += (f_s->flag == '+' || f_s->flag_second == '+'
 				|| f_s->flag == ' ' || f_s->flag_second == ' ') ? 1 : 0;
 		num_len += (f_s->flag == '+' || f_s->flag_second == '+'
