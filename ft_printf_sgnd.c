@@ -43,7 +43,7 @@ void	if_minus(const long long int *n, t_format *f_s,
 void	if_plus(long long int *n, t_format *f_s,
 		int *num_len, int *i)
 {
-	if ((f_s->flg == '0' || f_s->flg_ii == '0') && f_s->acc != -1)
+	if ((f_s->flg == '0' || f_s->flg_ii == '0') && f_s->acc == -1)
 	{
 		*i += write(1, (*n >= 0) ? "+" : "-", 1);
 		*i += ft_printf_char(f_s->wdth - (*num_len), '0');
@@ -61,17 +61,29 @@ void	if_plus(long long int *n, t_format *f_s,
 void	if_space(long long int *n, t_format *f_s,
 		int *num_len, int *i)
 {
-	*i += write(1, " ", 1);
+	if (*n < 0)
+	{
+		*i += f_s->acc != -1 && f_s->acc < *num_len ?
+				ft_printf_char(f_s->wdth - *num_len - 1, ' ') : 0;
+		*i += f_s->acc != -1 && f_s->acc > *num_len ?
+				ft_printf_char(f_s->wdth - f_s->acc - 1, ' ') : 0;
+		*i += write(1, "-", 1);
+	}
+	else
+		*i += write(1, " ", 1);
 	*i += f_s->acc == -1 && (f_s->flg == '0' || f_s->flg_ii == '0') ?
 			ft_printf_char(f_s->wdth - *num_len - 1, '0') : 0;
-	*i += f_s->acc != -1 && f_s->acc > *num_len ?
-			ft_printf_char(f_s->wdth - f_s->acc - 1, ' ') : 0;
-	*i += f_s->acc != -1 && f_s->acc < *num_len ?
-			ft_printf_char(f_s->wdth - *num_len - 1, ' ') : 0;
+	if (*n >= 0)
+	{
+		*i += f_s->acc != -1 && f_s->acc > *num_len ?
+				ft_printf_char(f_s->wdth - f_s->acc - 1, ' ') : 0;
+		*i += f_s->acc != -1 && f_s->acc < *num_len ?
+				ft_printf_char(f_s->wdth - *num_len - 1, ' ') : 0;
+	}
 	*i += f_s->acc == -1 && (f_s->flg != '0' && f_s->flg_ii != '0') ?
 			ft_printf_char(f_s->wdth - *num_len - 1, ' ') : 0;
 	*i += f_s->acc != -1 ? ft_printf_char(f_s->acc - *num_len, '0') : 0;
-	ft_printf_signed((*n < 0) ? -(*n) : *n, i);
+	ft_printf_unsigned((*n < 0) ? -(*n) : *n, i);
 }
 
 void	if_else(long long int *n, t_format *f_s,
@@ -119,9 +131,9 @@ int		ft_printf_sgnd(va_list ap, t_format *f_s)
 		num_len += (n >= 0) && (f_s->flg == '+' || f_s->flg_ii == '+') ? 1 : 0;
 		if_plus(&n, f_s, &num_len, &i);
 	}
-	else if ((f_s->flg == ' ' || f_s->flg_ii == ' ') && (n >= 0))
+	else if ((f_s->flg == ' ' || f_s->flg_ii == ' '))
 	{
-		num_len += (n >= 0) && (f_s->flg == '+' || f_s->flg_ii == '+') ? 1 : 0;
+		num_len += (n < 0) ? -1 : 0;
 		if_space(&n, f_s, &num_len, &i);
 	}
 	else
