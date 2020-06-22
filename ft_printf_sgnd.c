@@ -51,7 +51,7 @@ void	if_plus(long long int *n, t_format *f_s,
 	else
 	{
 		*i += ft_printf_char(f_s->wdth - ((f_s->acc < *num_len) ?
-				*num_len + 1 : f_s->acc + 1), ' ');
+				*num_len : f_s->acc + 1), ' ');
 		*i += write(1, (*n >= 0) ? "+" : "-", 1);
 		*i += ft_printf_char(f_s->acc - (*num_len - 1), '0');
 	}
@@ -122,7 +122,7 @@ int		ft_printf_sgnd(va_list ap, t_format *f_s)
 	int				i;
 
 	i = 0;
-	n = get_num_value(ap, f_s);
+	n = get_sngd_value(ap, f_s);
 	num_len = ft_signed_numlen(n);
 	if (f_s->flg == '-' || f_s->flg_ii == '-')
 		if_minus(&n, f_s, &num_len, &i);
