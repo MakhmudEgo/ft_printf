@@ -12,7 +12,7 @@
 
 #include "libftprintf.h"
 
-void	if_minus(const long long int *n, t_format *f_s,
+static void	if_minus(const long long int *n, t_format *f_s,
 		int *num_len, int *i)
 {
 	*i += (*n < 0) ? write(1, "-", 1) : 0;
@@ -40,7 +40,7 @@ void	if_minus(const long long int *n, t_format *f_s,
 ** '-' !gnored '0'
 */
 
-void	if_plus(long long int *n, t_format *f_s,
+static void	if_plus(long long int *n, t_format *f_s,
 		int *num_len, int *i)
 {
 	if ((f_s->flg == '0' || f_s->flg_ii == '0') && f_s->acc == -1)
@@ -58,7 +58,7 @@ void	if_plus(long long int *n, t_format *f_s,
 	ft_printf_signed((*n < 0) ? -(*n) : *n, i);
 }
 
-void	if_space(long long int *n, t_format *f_s,
+static void	if_space(long long int *n, t_format *f_s,
 		int *num_len, int *i)
 {
 	if (*n < 0)
@@ -86,7 +86,7 @@ void	if_space(long long int *n, t_format *f_s,
 	ft_printf_unsigned((*n < 0) ? -(*n) : *n, i);
 }
 
-void	if_else(long long int *n, t_format *f_s,
+static void	if_else(long long int *n, t_format *f_s,
 		int *num_len, int *i)
 {
 	*i += (*n < 0) ? write(1, "-", 1) : 0;
