@@ -12,7 +12,7 @@
 
 #include "libftprintf.h"
 
-void	ft_printf_unsigned(unsigned long n, int *i)
+void	ft_printf_unsigned(unsigned long long n, int *i)
 {
 	char	c;
 
