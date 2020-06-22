@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-int ft_unsigned_numlen(unsigned long long int n)
+int	ft_unsigned_numlen(unsigned long long int n)
 {
 	int i;
 
@@ -25,7 +25,7 @@ int ft_unsigned_numlen(unsigned long long int n)
 	return (i);
 }
 
-int ft_signed_numlen(long long int n)
+int	ft_signed_numlen(long long int n)
 {
 	int i;
 

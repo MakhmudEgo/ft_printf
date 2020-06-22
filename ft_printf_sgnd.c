@@ -115,7 +115,7 @@ static void	if_else(long long int *n, t_format *f_s,
 	ft_printf_signed((*n < 0) ? -(*n) : *n, i);
 }
 
-int		ft_printf_sgnd(va_list ap, t_format *f_s)
+int			ft_printf_sgnd(va_list ap, t_format *f_s)
 {
 	int				num_len;
 	long long int	n;

@@ -48,7 +48,7 @@ static void	g_f_s_assist_1(const char *format, t_format *f_s)
 			else if ((f_s->flg_ii == 1 && f_s->flg != *format) ||
 			((*format == '+' && f_s->flg_ii == ' ')
 			|| (*format == '-' && f_s->flg_ii == '0')
-			   || (f_s->flg == '+' && f_s->flg_ii == ' ')))
+			|| (f_s->flg == '+' && f_s->flg_ii == ' ')))
 				f_s->flg_ii = *format;
 			if (!f_s->mdf_x && *format == '#')
 				f_s->mdf_x = *format;
