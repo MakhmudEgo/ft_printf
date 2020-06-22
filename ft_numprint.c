@@ -24,7 +24,6 @@ void	ft_printf_unsigned(unsigned long long n, int *i)
 
 void	ft_printf_signed(long long int n, int *i)
 {
-	char					c;
 	unsigned long long int	num;
 
 	num = (n < 0) ? -n : n;
