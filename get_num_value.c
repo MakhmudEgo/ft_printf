@@ -12,7 +12,7 @@
 
 #include "libftprintf.h"
 
-long long int	get_num_value(va_list ap, t_format *f_s)
+long long int	get_sngd_value(va_list ap, t_format *f_s)
 {
 	long long int	n;
 
@@ -27,4 +27,21 @@ long long int	get_num_value(va_list ap, t_format *f_s)
 	else
 		n = va_arg(ap, int);
 	return (n);
+}
+
+long long int	get_unsgd_value(va_list ap, t_format *f_s)
+{
+    long long int	n;
+
+    if (f_s->mdf == 'h' && f_s->mdf_ii != 'h')
+        n = (unsigned short)va_arg(ap, int);
+    else if (f_s->mdf == 'h' && f_s->mdf_ii == 'h')
+        n = (unsigned char)va_arg(ap, int);
+    else if (f_s->mdf == 'l' && f_s->mdf_ii != 'l')
+        n = va_arg(ap, unsigned long);
+    else if (f_s->mdf == 'l' && f_s->mdf_ii == 'l')
+        n = va_arg(ap,  unsigned long long int);
+    else
+        n = va_arg(ap, unsigned int);
+    return (n);
 }
