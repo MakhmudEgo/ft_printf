@@ -45,6 +45,7 @@ void			ft_printf_unsigned(unsigned long n, int *i);
 void			ft_printf_signed(long long int n, int *i);
 int				ft_printf_sgnd(va_list ap, t_format *f_s);
 int				ft_printf_char(int n, char c);
-long long int	get_num_value(va_list ap, t_format *f_s);
+long long int	get_sngd_value(va_list ap, t_format *f_s);
+long long int	get_unsgd_value(va_list ap, t_format *f_s);
 
 #endif
