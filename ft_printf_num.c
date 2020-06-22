@@ -28,5 +28,7 @@ int			ft_printf_num(va_list ap, t_format *f_s)
 	i = 0;
 	if (f_s->cnv_tp == 'd' || f_s->cnv_tp == 'i')
 		return (ft_printf_sgnd(ap, f_s));
+	else if (f_s->cnv_tp == 'u')
+        return (ft_printf_usgnd(ap, f_s));
 	return (i);
 }
