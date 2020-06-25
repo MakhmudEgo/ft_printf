@@ -6,7 +6,7 @@
 /*   By: mizola <mizola@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/05 17:25:37 by mizola            #+#    #+#             */
-/*   Updated: 2020/06/22 20:40:09 by mizola           ###   ########.fr       */
+/*   Updated: 2020/06/25 16:59:23 by mizola           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,10 @@ int					ft_printf_usgnd(va_list ap, t_format *f_s);
 int					ft_printf_char(int n, char c);
 long long int		get_sngd_value(va_list ap, t_format *f_s);
 unsigned long long	get_usgnd_value(va_list ap, t_format *f_s);
+void				ft_print_check_zero(long long int *n,
+					t_format *f_s, int *i);
+void				ft_print_check_uzero(unsigned long long *n,
+					t_format *f_s, int *i);
+
 
 #endif
