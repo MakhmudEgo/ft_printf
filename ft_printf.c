@@ -6,35 +6,60 @@
 /*   By: mizola <mizola@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/30 20:43:18 by mizola            #+#    #+#             */
-/*   Updated: 2020/05/31 16:57:22 by mizola           ###   ########.fr       */
+/*   Updated: 2020/06/25 19:53:14 by mizola           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
+static int		ft_print_chars_c(t_format *f_s, char c)
+{
+	int i;
+
+	i = 0;
+	if (f_s->flg == '-' || f_s->flg_ii == '-')
+		i += write(1, &c, 1);
+	i += ft_printf_char(f_s->wdth - 1, ' ');
+	if (f_s->flg != '-' && f_s->flg_ii != '-')
+		i += write(1, &c, 1);
+	return (i);
+}
+
+static int		ft_print_chars_s(t_format *f_s, char *s)
+{
+	int		i;
+	size_t	s_len;
+
+	i = 0;
+	s_len = ft_strlen(s);
+	if (f_s->acc != -1)
+		s_len = f_s->acc > (int)ft_strlen(s) ? ft_strlen(s) : f_s->acc;
+	if (f_s->flg == '-' || f_s->flg_ii == '-')
+		i += write(1, s, s_len);
+	i += ft_printf_char(f_s->wdth - s_len, ' ');
+	if (f_s->flg != '-' && f_s->flg_ii != '-')
+		i += write(1, s, s_len);
+	return (i);
+}
+
 static int		ft_print_chars(va_list ap, t_format *f_s)
 {
 	int		i;
-	char	c;
 	char	*str;
 
 	i = 0;
 	str = 0x0;
-	c = 0x0;
 	if (f_s->mdf == 'l' || f_s->cnv_tp == 'S')
 		return (ft_printf_unicode(ap, f_s->cnv_tp));
 	if (f_s->cnv_tp == 'c')
-	{
-		c = (char)va_arg(ap, int);
-		i += write(1, &c, 1);
-	}
+		i += ft_print_chars_c(f_s, (char)va_arg(ap, int));
 	else
 	{
 		str = va_arg(ap, char*);
 		if (!str)
-			i += write(1, "(null)", 6);
+			i += ft_print_chars_s(f_s, "(null)");
 		else
-			i += write(1, str, ft_strlen(str));
+			i += ft_print_chars_s(f_s, str);
 	}
 	return (i);
 }
