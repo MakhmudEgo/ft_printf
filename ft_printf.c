@@ -6,7 +6,7 @@
 /*   By: mizola <mizola@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/30 20:43:18 by mizola            #+#    #+#             */
-/*   Updated: 2020/06/25 19:53:14 by mizola           ###   ########.fr       */
+/*   Updated: 2020/06/25 22:13:41 by mizola           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,10 @@ static int		ft_printf_assist(const char *format, va_list ap, t_format *f_s)
 	i = 0;
 	while (*format && *format != f_s->cnv_tp)
 		format++;
-	if (*format == 'p' || *format == 'x' || *format == 'X')
-		i += ft_printf_addr(*format, ap, f_s);
+	if (*format == 'p')
+		i += ft_printf_addr(ap, f_s);
+	else if (*format == 'x' || *format == 'X')
+		i += ft_printf_x(ap, f_s);
 	else if (*format == 's' || *format == 'c' || *format == 'S')
 		i += ft_print_chars(ap, f_s);
 	else if (*format == 'd' || *format == 'i' || *format == 'u')
