@@ -6,7 +6,7 @@
 /*   By: mizola <mizola@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/22 19:55:24 by mizola            #+#    #+#             */
-/*   Updated: 2020/06/25 16:59:23 by mizola           ###   ########.fr       */
+/*   Updated: 2020/06/25 17:07:29 by mizola           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ static void	if_plus(unsigned long long *n, t_format *f_s,
 		*i += ft_printf_char(f_s->acc - (*num_len), '0');
 	}
 	ft_print_check_uzero(n, f_s, i);
-
 }
 
 static void	if_space(unsigned long long *n, t_format *f_s,
@@ -66,7 +65,7 @@ static void	if_else(unsigned long long *n, t_format *f_s,
 {
 	f_s->acc += f_s->acc && (f_s->flg == '+'
 	|| f_s->flg_ii == '+' || f_s->flg == ' '
-	|| f_s->flg_ii == ' ') ? 1 : 0; // || (*n < 0)
+	|| f_s->flg_ii == ' ') ? 1 : 0;
 	*num_len += (f_s->flg == '+' || f_s->flg_ii == '+'
 		|| f_s->flg == ' ' || f_s->flg_ii == ' ') ? 1 : 0;
 	if (f_s->flg == '0' || f_s->flg_ii == '0')
