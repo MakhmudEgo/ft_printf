@@ -6,75 +6,68 @@
 /*   By: mizola <mizola@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/04 02:08:04 by mizola            #+#    #+#             */
-/*   Updated: 2020/06/04 02:08:05 by mizola           ###   ########.fr       */
+/*   Updated: 2020/06/25 22:13:41 by mizola           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-static void	print_p(char c, unsigned long long n, int *i)
+static void	print_p(unsigned long long n, int *i)
 {
 	char	n_hex;
 
 	if (n >= 16)
-		print_p(c, n >> 4, i);
+		print_p(n >> 4, i);
 	n_hex = (int)(n % 16) + '0';
 	if ((int)n_hex == 58)
-		n_hex = (c == 'X') ? 'A' : 'a';
+		n_hex = 'a';
 	if ((int)n_hex == 59)
-		n_hex = (c == 'X') ? 'B' : 'b';
+		n_hex = 'b';
 	if ((int)n_hex == 60)
-		n_hex = (c == 'X') ? 'C' : 'c';
+		n_hex = 'c';
 	if ((int)n_hex == 61)
-		n_hex = (c == 'X') ? 'D' : 'd';
+		n_hex = 'd';
 	if ((int)n_hex == 62)
-		n_hex = (c == 'X') ? 'E' : 'e';
+		n_hex = 'e';
 	if ((int)n_hex == 63)
-		n_hex = (c == 'X') ? 'F' : 'f';
+		n_hex = 'f';
 	write(1, &n_hex, 1);
 	*i += 1;
 }
 
-static void	print_x(char c, unsigned int n, int *i, t_format *f_s)
+static int	ft_hex(unsigned long long n, t_format *f_s)
 {
-	char	n_hex;
+	int i;
+	int hex_len;
+	unsigned long long num;
 
-	if (n >= 16)
-		print_x(c, n >> 4, i, f_s);
-	n_hex = (int)(n % 16) + '0';
-	if ((int)n_hex == 58)
-		n_hex = (c == 'X') ? 'A' : 'a';
-	if ((int)n_hex == 59)
-		n_hex = (c == 'X') ? 'B' : 'b';
-	if ((int)n_hex == 60)
-		n_hex = (c == 'X') ? 'C' : 'c';
-	if ((int)n_hex == 61)
-		n_hex = (c == 'X') ? 'D' : 'd';
-	if ((int)n_hex == 62)
-		n_hex = (c == 'X') ? 'E' : 'e';
-	if ((int)n_hex == 63)
-		n_hex = (c == 'X') ? 'F' : 'f';
-	write(1, &n_hex, 1);
-	*i += 1;
+	i = 0;
+	num = n;
+	hex_len = n == 0 ? 3 : 2;
+	while (num)
+	{
+		num >>= 4;
+		hex_len++;
+	}
+	if (f_s->flg == '-' || f_s->flg_ii == '-')
+	{
+		i += write(1, "0x", 2);
+		print_p(n, &i);
+	}
+	i += ft_printf_char(f_s->wdth - hex_len, ' ');
+	if (f_s->flg != '-' && f_s->flg_ii != '-')
+	{
+		i += write(1, "0x", 2);
+		print_p(n, &i);
+	}
+	return (i);
 }
 
-int			ft_printf_addr(char c, va_list ap, t_format *f_s)
+int			ft_printf_addr(va_list ap, t_format *f_s)
 {
 	int i;
 
 	i = 0;
-	if (c == 'p' || f_s->mdf_x)
-		i += c == 'X' ? write(1, "0X", 2) : write(1, "0x", 2);
-	if (c == 'p' || f_s->mdf == 'l')
-		print_p(c, va_arg(ap, unsigned long), &i);
-	else
-	{
-		if (f_s->mdf == 'h' && f_s->mdf_ii != 'h')
-			print_x(c, (unsigned short)va_arg(ap, int), &i, f_s);
-		else if (f_s->mdf == 'h' && f_s->mdf_ii == 'h')
-			print_x(c, (unsigned char)va_arg(ap, int), &i, f_s);
-		else
-			print_x(c, va_arg(ap, int), &i, f_s);
-	}
+	i += ft_hex(va_arg(ap, unsigned long), f_s);
 	return (i);
 }
