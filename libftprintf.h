@@ -33,7 +33,7 @@ typedef struct		s_formatspecifiers
 }					t_format;
 
 int					ft_printf(const char *format, ...);
-int					ft_printf_addr(char c, va_list ap, t_format *f_s);
+int					ft_printf_addr(va_list ap, t_format *f_s);
 void				get_format_specifiers(const char *format,
 					t_format *f_s, va_list ap);
 size_t				ft_strlen(const char *str);
@@ -52,6 +52,8 @@ void				ft_print_check_zero(long long int *n,
 					t_format *f_s, int *i);
 void				ft_print_check_uzero(unsigned long long *n,
 					t_format *f_s, int *i);
+int					ft_printf_x(va_list ap, t_format *f_s);
+
 
 
 #endif
