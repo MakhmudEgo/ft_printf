@@ -14,7 +14,8 @@ NAME = libftprintf.a
 
 SRC = 	format_specifiers.c ft_numlen.c ft_numprint.c ft_printf_addr.c\
 		ft_printf_char.c ft_printf_num.c ft_printf_sgnd.c ft_printf_unicode.c\
-		ft_printf_usgnd.c ft_printf.c ft_strlen.c get_num_value.c ft_print_check_zero.c
+		ft_printf_usgnd.c ft_printf.c ft_strlen.c get_num_value.c\
+		ft_print_check_zero.c ft_printf_x.c
 
 OSRC = $(SRC:.c=.o)
 
