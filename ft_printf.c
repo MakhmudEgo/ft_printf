@@ -6,7 +6,7 @@
 /*   By: mizola <mizola@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/30 20:43:18 by mizola            #+#    #+#             */
-/*   Updated: 2020/06/25 22:13:41 by mizola           ###   ########.fr       */
+/*   Updated: 2020/06/26 13:05:38 by mizola           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,15 @@ static int		ft_printf_assist(const char *format, va_list ap, t_format *f_s)
 	else if (*format == 'd' || *format == 'i' || *format == 'u')
 		i += ft_printf_num(ap, f_s);
 	else if (*format == '%')
-		i += write(1, "%", 1);
+	{
+		i += f_s->flg == '-' || f_s->flg_ii == '-' ? write(1, "%", 1) : 0;
+		if (f_s->flg != '-' && f_s->flg_ii != '-')
+			i += f_s->flg == '0' || f_s->flg_ii == '0' ?
+					ft_printf_char(f_s->wdth - 1, '0') : 0;
+		i += (f_s->flg != '0' && f_s->flg_ii != '0') || (f_s->flg == '-'
+				|| f_s->flg_ii == '-') ? ft_printf_char(f_s->wdth - 1, ' ') : 0;
+		i += f_s->flg != '-' && f_s->flg_ii != '-' ? write(1, "%", 1) : 0;
+	}
 	return (i);
 }
 
