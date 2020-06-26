@@ -6,7 +6,7 @@
 /*   By: mizola <mizola@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/07 17:27:41 by mizola            #+#    #+#             */
-/*   Updated: 2020/06/07 17:27:42 by mizola           ###   ########.fr       */
+/*   Updated: 2020/06/26 11:49:04 by mizola           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ static void	g_f_s_assist_2(const char *format, t_format *f_s, va_list ap)
 	if (*format == '*')
 	{
 		f_s->acc = va_arg(ap, int);
+		f_s->acc = f_s->acc < 0 ? -1 : f_s->acc;
 		format++;
 		while (*format && *format >= '0' && *format <= '9')
 			format++;
@@ -107,6 +108,10 @@ void		get_format_specifiers(const char *format, t_format *f_s, va_list ap)
 	if (*format == '*')
 	{
 		f_s->wdth = va_arg(ap, int);
+		f_s->flg = f_s->flg != '+' && f_s->wdth < 0 ? '-' : f_s->flg;
+		f_s->flg_ii = f_s->flg != '-' && f_s->flg_ii != '+'
+				&& f_s->wdth < 0 ? '-' : f_s->flg_ii;
+		f_s->wdth = f_s->wdth < 0 ? -f_s->wdth : f_s->wdth;
 		format++;
 		while (*format && *format >= '0' && *format <= '9')
 			format++;
