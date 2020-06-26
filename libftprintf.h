@@ -6,7 +6,7 @@
 /*   By: mizola <mizola@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/05 17:25:37 by mizola            #+#    #+#             */
-/*   Updated: 2020/06/25 16:59:23 by mizola           ###   ########.fr       */
+/*   Updated: 2020/06/26 13:07:57 by mizola           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,19 @@ void				ft_print_check_zero(long long int *n,
 void				ft_print_check_uzero(unsigned long long *n,
 					t_format *f_s, int *i);
 int					ft_printf_x(va_list ap, t_format *f_s);
-
-
+void				print_x(char c, unsigned int n, int *i);
+void				print_lx(char c, unsigned long long n, int *i);
+void				ft_print_check_xzero(unsigned int *n,
+					t_format *f_s, int *i);
+void				ft_print_check_lxzero(unsigned long long *n,
+					t_format *f_s, int *i);
+void				if_minus_x(void *n, t_format *f_s,
+					int *hex_len, int *i);
+void				if_plus_x(void *n, t_format *f_s,
+					int *hex_len, int *i);
+void				if_space_x(void *n, t_format *f_s,
+					int *hex_len, int *i);
+void				if_else_x(void *n, t_format *f_s,
+					int *hex_len, int *i);
 
 #endif
