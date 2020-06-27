@@ -6,7 +6,7 @@
 /*   By: mizola <mizola@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/07 17:27:41 by mizola            #+#    #+#             */
-/*   Updated: 2020/06/27 11:51:56 by mizola           ###   ########.fr       */
+/*   Updated: 2020/06/27 18:13:17 by mizola           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static void	init_format_specifiers(t_format *f_s)
 	f_s->mdf = 0x0;
 	f_s->mdf_ii = 0x0;
 	f_s->cnv_tp = 0x0;
+	f_s->amnt_prnt_c = 0x0;
 }
 
 /*

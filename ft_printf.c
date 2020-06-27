@@ -6,7 +6,7 @@
 /*   By: mizola <mizola@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/30 20:43:18 by mizola            #+#    #+#             */
-/*   Updated: 2020/06/27 12:12:46 by mizola           ###   ########.fr       */
+/*   Updated: 2020/06/27 18:13:55 by mizola           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ static int		ft_printf_assist(const char *format, va_list ap, t_format *f_s)
 		i += !f_s->is_zr || f_s->is_mns ? ft_printf_char(--f_s->wdth, ' ') : 0;
 		i += !f_s->is_mns ? write(1, "%", 1) : 0;
 	}
+	else if (*format == 'n')
+		ft_printf_n(f_s->amnt_prnt_c, ap);
 	return (i);
 }
 
@@ -109,6 +111,7 @@ int				ft_printf(const char *format, ...)
 		{
 			format++;
 			get_format_specifiers(format, &f_s, ap);
+			f_s.amnt_prnt_c = i;
 			i += ft_printf_assist(format, ap, &f_s);
 			while (*format && *format != f_s.cnv_tp)
 				format++;
