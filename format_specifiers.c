@@ -6,7 +6,7 @@
 /*   By: mizola <mizola@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/07 17:27:41 by mizola            #+#    #+#             */
-/*   Updated: 2020/06/26 11:49:04 by mizola           ###   ########.fr       */
+/*   Updated: 2020/06/27 11:51:56 by mizola           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,15 @@
 
 static void	init_format_specifiers(t_format *f_s)
 {
-	f_s->flg = 1;
-	f_s->flg_ii = 1;
+	f_s->is_mns = 0x0;
+	f_s->is_zr = 0x0;
+	f_s->is_pls = 0x0;
+	f_s->is_spc = 0x0;
+	f_s->flg_x = 0x0;
 	f_s->wdth = 0x0;
 	f_s->acc = -1;
 	f_s->mdf = 0x0;
 	f_s->mdf_ii = 0x0;
-	f_s->mdf_x = 0x0;
 	f_s->cnv_tp = 0x0;
 }
 
@@ -42,16 +44,11 @@ static void	g_f_s_assist_1(const char *format, t_format *f_s)
 	{
 		if (*format != "'"[0])
 		{
-			if (f_s->flg == 1 || (*format == '+' && f_s->flg == ' ')
-				|| (*format == '-' && f_s->flg == '0'))
-				f_s->flg = *format;
-			else if ((f_s->flg_ii == 1 && f_s->flg != *format) ||
-			((*format == '+' && f_s->flg_ii == ' ')
-			|| (*format == '-' && f_s->flg_ii == '0')
-			|| (f_s->flg == '+' && f_s->flg_ii == ' ')))
-				f_s->flg_ii = *format;
-			if (!f_s->mdf_x && *format == '#')
-				f_s->mdf_x = *format;
+			f_s->is_mns = *format == '-' ? 1 : f_s->is_mns;
+			f_s->is_zr = *format == '0' ? 1 : f_s->is_zr;
+			f_s->is_pls = *format == '+' ? 1 : f_s->is_pls;
+			f_s->is_spc = *format == ' ' ? 1 : f_s->is_spc;
+			f_s->flg_x = *format == '#' ? 1 : f_s->flg_x;
 		}
 		format++;
 	}
@@ -108,9 +105,7 @@ void		get_format_specifiers(const char *format, t_format *f_s, va_list ap)
 	if (*format == '*')
 	{
 		f_s->wdth = va_arg(ap, int);
-		f_s->flg = f_s->flg != '+' && f_s->wdth < 0 ? '-' : f_s->flg;
-		f_s->flg_ii = f_s->flg != '-' && f_s->flg_ii != '+'
-				&& f_s->wdth < 0 ? '-' : f_s->flg_ii;
+		f_s->is_mns = f_s->wdth < 0 ? '-' : f_s->is_mns;
 		f_s->wdth = f_s->wdth < 0 ? -f_s->wdth : f_s->wdth;
 		format++;
 		while (*format && *format >= '0' && *format <= '9')
