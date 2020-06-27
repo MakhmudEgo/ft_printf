@@ -6,7 +6,7 @@
 /*   By: mizola <mizola@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/05 17:25:37 by mizola            #+#    #+#             */
-/*   Updated: 2020/06/27 11:51:56 by mizola           ###   ########.fr       */
+/*   Updated: 2020/06/27 17:38:29 by mizola           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,8 @@ void				if_space_x(void *n, t_format *f_s,
 					int *hex_len, int *i);
 void				if_else_x(void *n, t_format *f_s,
 					int *hex_len, int *i);
+void				if_zero_x(void *n, t_format *f_s,
+					int *hex_len, int *i);
+void				check_pr(int *i, t_format *f_s, void *n);
 
 #endif
