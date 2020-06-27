@@ -49,13 +49,13 @@ static int	ft_hex(unsigned long long n, t_format *f_s)
 		num >>= 4;
 		hex_len++;
 	}
-	if (f_s->flg == '-' || f_s->flg_ii == '-')
+	if (f_s->is_mns)
 	{
 		i += write(1, "0x", 2);
 		print_p(n, &i);
 	}
 	i += ft_printf_char(f_s->wdth - hex_len, ' ');
-	if (f_s->flg != '-' && f_s->flg_ii != '-')
+	if (!f_s->is_mns)
 	{
 		i += write(1, "0x", 2);
 		print_p(n, &i);
