@@ -36,7 +36,7 @@ void	if_minus_x(void *n, t_format *f_s,
 void	if_plus_x(void *n, t_format *f_s,
 		int *hex_len, int *i)
 {
-	if ((f_s->flg == '0' || f_s->flg_ii == '0') && f_s->acc == -1)
+	if (f_s->is_zr && f_s->acc == -1)
 		*i += ft_printf_char(f_s->wdth - (*hex_len), '0');
 	else
 	{
@@ -54,13 +54,13 @@ void	if_space_x(void *n, t_format *f_s,
 						int *hex_len, int *i)
 {
 	*i += write(1, " ", 1);
-	*i += f_s->acc == -1 && (f_s->flg == '0' || f_s->flg_ii == '0') ?
+	*i += f_s->acc == -1 && f_s->is_zr ?
 			ft_printf_char(f_s->wdth - *hex_len - 1, '0') : 0;
 	*i += f_s->acc != -1 && f_s->acc > *hex_len ?
 			ft_printf_char(f_s->wdth - f_s->acc - 1, ' ') : 0;
 	*i += f_s->acc != -1 && f_s->acc < *hex_len ?
 			ft_printf_char(f_s->wdth - *hex_len - 1, ' ') : 0;
-	*i += f_s->acc == -1 && (f_s->flg != '0' && f_s->flg_ii != '0') ?
+	*i += f_s->acc == -1 && !f_s->is_zr ?
 			ft_printf_char(f_s->wdth - *hex_len - 1, ' ') : 0;
 	*i += f_s->acc != -1 ? ft_printf_char(f_s->acc - *hex_len, '0') : 0;
 	if (f_s->mdf == 'l')
@@ -72,7 +72,7 @@ void	if_space_x(void *n, t_format *f_s,
 void	if_else_x(void *n, t_format *f_s,
 		int *hex_len, int *i)
 {
-	if (f_s->flg == '0' || f_s->flg_ii == '0')
+	if (f_s->is_zr)
 	{
 		if (f_s->acc != -1)
 		{
