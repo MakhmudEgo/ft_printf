@@ -6,7 +6,7 @@
 /*   By: mizola <mizola@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/05 17:25:37 by mizola            #+#    #+#             */
-/*   Updated: 2020/06/27 17:38:29 by mizola           ###   ########.fr       */
+/*   Updated: 2020/06/27 18:17:59 by mizola           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,14 @@ typedef struct		s_formatspecifiers
 	char			mdf;
 	char			mdf_ii;
 	char			cnv_tp;
+	size_t			amnt_prnt_c;
 }					t_format;
 
 int					ft_printf(const char *format, ...);
 int					ft_printf_addr(va_list ap, t_format *f_s);
 void				get_format_specifiers(const char *format,
 					t_format *f_s, va_list ap);
-int 				ft_strlen(const char *str);
+int					ft_strlen(const char *str);
 int					ft_printf_num(va_list ap, t_format *f_s);
 int					ft_printf_unicode(va_list ap, char c_arg);
 int					ft_signed_numlen(long long int n);
@@ -72,5 +73,6 @@ void				if_else_x(void *n, t_format *f_s,
 void				if_zero_x(void *n, t_format *f_s,
 					int *hex_len, int *i);
 void				check_pr(int *i, t_format *f_s, void *n);
+void				ft_printf_n(int i, va_list ap);
 
 #endif
