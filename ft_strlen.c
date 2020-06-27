@@ -12,9 +12,9 @@
 
 #include "libftprintf.h"
 
-size_t		ft_strlen(const char *str)
+int		ft_strlen(const char *str)
 {
-	size_t index;
+	int index;
 
 	index = 0;
 	while (str[index] != '\0')
