@@ -52,7 +52,8 @@ static void	if_plus(long long int *n, t_format *f_s,
 	{
 		*i += ft_printf_char(f_s->wdth - ((f_s->acc < *num_len) ?
 				*num_len : f_s->acc + 1), ' ');
-		*i += write(1, (*n >= 0) ? "+" : "-", 1);
+		if (!(*n == 0 && f_s->acc == 0))
+			*i += write(1, (*n >= 0) ? "+" : "-", 1);
 		*i += ft_printf_char(f_s->acc - (*num_len - 1), '0');
 	}
 	ft_print_check_zero(n, f_s, i);
