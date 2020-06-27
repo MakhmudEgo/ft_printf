@@ -37,9 +37,9 @@ static void	print_p(unsigned long long n, int *i)
 
 static int	ft_hex(unsigned long long n, t_format *f_s)
 {
-	int i;
-	int hex_len;
-	unsigned long long num;
+	int					i;
+	int					hex_len;
+	unsigned long long	num;
 
 	i = 0;
 	num = n;

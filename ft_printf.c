@@ -80,7 +80,7 @@ static int		ft_printf_assist(const char *format, va_list ap, t_format *f_s)
 		i += f_s->is_mns ? write(1, "%", 1) : 0;
 		i += f_s->is_zr && !f_s->is_mns ?
 				ft_printf_char(f_s->wdth - 1, '0') : 0;
-		i += !f_s->is_zr || f_s->is_mns ? ft_printf_char(f_s->wdth - 1, ' ') : 0;
+		i += !f_s->is_zr || f_s->is_mns ? ft_printf_char(--f_s->wdth, ' ') : 0;
 		i += !f_s->is_mns ? write(1, "%", 1) : 0;
 	}
 	return (i);

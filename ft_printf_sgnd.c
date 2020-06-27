@@ -6,7 +6,7 @@
 /*   By: mizola <mizola@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/16 17:11:33 by mizola            #+#    #+#             */
-/*   Updated: 2020/06/27 14:49:44 by mizola           ###   ########.fr       */
+/*   Updated: 2020/06/27 16:06:04 by mizola           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,10 @@ static void	if_minus(long long int *n, t_format *f_s,
 	*i += *n < 0 ? write(1, "-", 1) : 0;
 	*i += *n >= 0 && f_s->is_spc && !f_s->is_pls ? write(1, " ", 1) : 0;
 	*i += *n >= 0 && (f_s->is_pls) ? write(1, "+", 1) : 0;
-	*i += f_s->acc != -1 && *n >= 0 ? ft_printf_char(f_s->acc - *num_len, '0') : 0;
-	*i += f_s->acc != -1 && *n < 0 ? ft_printf_char(f_s->acc - *num_len + 1, '0') : 0;
+	*i += f_s->acc != -1 && *n >= 0 ?
+			ft_printf_char(f_s->acc - *num_len, '0') : 0;
+	*i += f_s->acc != -1 && *n < 0 ?
+			ft_printf_char(f_s->acc - *num_len + 1, '0') : 0;
 	ft_print_check_zero(n, f_s, i);
 	f_s->acc += f_s->acc > *num_len && *n < 0 ? 1 : 0;
 	f_s->wdth -= (f_s->is_pls || f_s->is_spc) && *n >= 0;
@@ -62,15 +64,18 @@ static void	if_space(long long int *n, t_format *f_s,
 	f_s->acc += *n < 0 && f_s->acc != -1 ? 1 : 0;
 	*i += *n >= 0 ? write(1, " ", 1) : 0;
 	f_s->wdth -= *n >= 0 ? 1 : 0;
-	*i += f_s->acc > *num_len ? ft_printf_char(f_s->wdth - f_s->acc, ' ') : 0;
-	*i += f_s->acc < *num_len && f_s->acc != -1 && *n < 0 ? ft_printf_char(f_s->wdth - *num_len, ' ') : 0;
-	*i += f_s->acc < *num_len && f_s->acc != -1 && *n >= 0 ? ft_printf_char(f_s->wdth - *num_len, ' ') : 0;
-
-
-	*i += f_s->acc == -1 && !f_s->is_zr ? ft_printf_char(f_s->wdth - *num_len, ' ') : 0;
+	*i += f_s->acc > *num_len ?
+			ft_printf_char(f_s->wdth - f_s->acc, ' ') : 0;
+	*i += f_s->acc < *num_len && f_s->acc != -1 && *n < 0 ?
+			ft_printf_char(f_s->wdth - *num_len, ' ') : 0;
+	*i += f_s->acc < *num_len && f_s->acc != -1 && *n >= 0 ?
+			ft_printf_char(f_s->wdth - *num_len, ' ') : 0;
+	*i += f_s->acc == -1 && !f_s->is_zr ?
+			ft_printf_char(f_s->wdth - *num_len, ' ') : 0;
 	*i += *n < 0 ? write(1, "-", 1) : 0;
 	*i += f_s->acc != -1 ? ft_printf_char(f_s->acc - *num_len, '0') : 0;
-	*i += f_s->acc == -1 && f_s->is_zr ? ft_printf_char(f_s->wdth - *num_len, '0') : 0;
+	*i += f_s->acc == -1 && f_s->is_zr ?
+			ft_printf_char(f_s->wdth - *num_len, '0') : 0;
 	ft_print_check_zero(n, f_s, i);
 }
 
