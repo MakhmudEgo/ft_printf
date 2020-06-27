@@ -6,7 +6,7 @@
 /*   By: mizola <mizola@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/30 20:43:18 by mizola            #+#    #+#             */
-/*   Updated: 2020/06/26 13:05:38 by mizola           ###   ########.fr       */
+/*   Updated: 2020/06/27 12:12:46 by mizola           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,28 +17,24 @@ static int		ft_print_chars_c(t_format *f_s, char c)
 	int i;
 
 	i = 0;
-	if (f_s->flg == '-' || f_s->flg_ii == '-')
-		i += write(1, &c, 1);
+	i += f_s->is_mns ? write(1, &c, 1) : 0;
 	i += ft_printf_char(f_s->wdth - 1, ' ');
-	if (f_s->flg != '-' && f_s->flg_ii != '-')
-		i += write(1, &c, 1);
+	i += !f_s->is_mns ? write(1, &c, 1) : 0;
 	return (i);
 }
 
 static int		ft_print_chars_s(t_format *f_s, char *s)
 {
-	int		i;
-	size_t	s_len;
+	int	i;
+	int	s_len;
 
 	i = 0;
 	s_len = ft_strlen(s);
 	if (f_s->acc != -1)
 		s_len = f_s->acc > (int)ft_strlen(s) ? ft_strlen(s) : f_s->acc;
-	if (f_s->flg == '-' || f_s->flg_ii == '-')
-		i += write(1, s, s_len);
+	i += f_s->is_mns ? write(1, s, s_len) : 0;
 	i += ft_printf_char(f_s->wdth - s_len, ' ');
-	if (f_s->flg != '-' && f_s->flg_ii != '-')
-		i += write(1, s, s_len);
+	i += !f_s->is_mns ? write(1, s, s_len) : 0;
 	return (i);
 }
 
@@ -81,13 +77,11 @@ static int		ft_printf_assist(const char *format, va_list ap, t_format *f_s)
 		i += ft_printf_num(ap, f_s);
 	else if (*format == '%')
 	{
-		i += f_s->flg == '-' || f_s->flg_ii == '-' ? write(1, "%", 1) : 0;
-		if (f_s->flg != '-' && f_s->flg_ii != '-')
-			i += f_s->flg == '0' || f_s->flg_ii == '0' ?
-					ft_printf_char(f_s->wdth - 1, '0') : 0;
-		i += (f_s->flg != '0' && f_s->flg_ii != '0') || (f_s->flg == '-'
-				|| f_s->flg_ii == '-') ? ft_printf_char(f_s->wdth - 1, ' ') : 0;
-		i += f_s->flg != '-' && f_s->flg_ii != '-' ? write(1, "%", 1) : 0;
+		i += f_s->is_mns ? write(1, "%", 1) : 0;
+		i += f_s->is_zr && !f_s->is_mns ?
+				ft_printf_char(f_s->wdth - 1, '0') : 0;
+		i += !f_s->is_zr || f_s->is_mns ? ft_printf_char(f_s->wdth - 1, ' ') : 0;
+		i += !f_s->is_mns ? write(1, "%", 1) : 0;
 	}
 	return (i);
 }
