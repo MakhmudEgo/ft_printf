@@ -20,18 +20,18 @@ static int	ft_hex(unsigned long long n, t_format *f_s)
 
 	i = 0;
 	hex_len = n == 0 ? 1 : 0;
-	hex_len += f_s->mdf_x == '#' ? 2 : 0;
+	hex_len += f_s->flg_x ? 2 : 0;
 	tmp_hex = f_s->mdf == 'l' ? n : (int)n;
 	while (tmp_hex)
 	{
 		tmp_hex >>= 4;
 		hex_len++;
 	}
-	if (f_s->flg == '-' || f_s->flg_ii == '-')
+	if (f_s->is_mns)
 		if_minus_x(&n, f_s, &hex_len, &i);
-	else if (f_s->flg == '+' || f_s->flg_ii == '+')
+	else if (f_s->is_pls)
 		if_plus_x(&n, f_s, &hex_len, &i);
-	else if ((f_s->flg == ' ' || f_s->flg_ii == ' '))
+	else if (f_s->is_spc)
 		if_space_x(&n, f_s, &hex_len, &i);
 	else
 		if_else_x(&n, f_s, &hex_len, &i);
