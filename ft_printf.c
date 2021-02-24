@@ -117,7 +117,7 @@ int				ft_printf(const char *format, ...)
 				format++;
 		}
 		else
-			i += write(1, &(*format), 1);
+			i += write(1, format, 1);
 		format++;
 	}
 	va_end(ap);
