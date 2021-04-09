@@ -12,7 +12,7 @@
 
 #include "libftprintf.h"
 
-long long int		get_sngd_value(va_list ap, t_format *f_s)
+long long int	get_sngd_value(va_list ap, t_format *f_s)
 {
 	long long int	n;
 

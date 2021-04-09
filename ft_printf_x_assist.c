@@ -13,14 +13,14 @@
 #include "libftprintf.h"
 
 void	if_minus_x(void *n, t_format *f_s,
-		int *hex_len, int *i)
+			int *hex_len, int *i)
 {
 	check_pr(i, f_s, n);
 	*i += ft_printf_char(f_s->acc - *hex_len, '0');
 	if (f_s->mdf == 'l')
 		ft_print_check_lxzero(n, f_s, i);
 	else
-		ft_print_check_xzero((unsigned int*)n, f_s, i);
+		ft_print_check_xzero((unsigned int *)n, f_s, i);
 	*i += ft_printf_char(f_s->wdth - ((*hex_len > f_s->acc) ?
 			*hex_len : f_s->acc), ' ');
 }
